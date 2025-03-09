@@ -81,7 +81,7 @@ module Sprockets
       end
     else
       def absolute_path?(path)
-        path.start_with?(File::SEPARATOR)
+        path.is_a?(String) && path.start_with?(File::SEPARATOR)
       end
     end
 
@@ -98,7 +98,7 @@ module Sprockets
     #
     # Returns true if path is relative, otherwise false.
     def relative_path?(path)
-      path.match?(/^\.\.?($|#{SEPARATOR_PATTERN})/) ? true : false
+      path.is_a?(String) && path.match?(/^\.\.?($|#{SEPARATOR_PATTERN})/) ? true : false
     end
 
     # Public: Get relative path from `start` to `dest`.
@@ -200,6 +200,7 @@ module Sprockets
     #
     # Returns [String extname, Object value] or nil nothing matched.
     def match_path_extname(path, extensions)
+      return unless path.is_a?(String)
       basename = File.basename(path)
 
       i = basename.index('.'.freeze)

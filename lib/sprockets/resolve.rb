@@ -141,6 +141,9 @@ module Sprockets
       # Returns Array. Filename, type, path_pipeline, deps, index_alias
       def resolve_logical_path(paths, logical_path, accept)
         extname, mime_type = PathUtils.match_path_extname(logical_path, config[:mime_exts])
+
+        return unless logical_path.is_a?(String)
+
         logical_name = logical_path.chomp(extname)
 
         extname, pipeline = PathUtils.match_path_extname(logical_name, config[:pipeline_exts])

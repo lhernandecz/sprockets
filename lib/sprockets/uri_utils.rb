@@ -77,8 +77,12 @@ module Sprockets
     #
     # Returns true or false.
     def valid_asset_uri?(str)
-      # Quick prefix check before attempting a full parse
-      str.start_with?("file://".freeze) && parse_asset_uri(str) ? true : false
+      # Ensure str is a string before calling start_with? to avoid the Regexp error
+      if str.is_a?(String) && str.start_with?("file://".freeze)
+        parse_asset_uri(str) ? true : false
+      else
+        false
+      end
     rescue URI::InvalidURIError
       false
     end
